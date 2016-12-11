@@ -33,19 +33,14 @@
                 controllerAs: "model"
             })
             .when("/shop", {
-                templateUrl: "views/shop/shop.view.client.html"
-                //controller: "ShopController",
-                //controllerAs: "model"
+                templateUrl: "views/shop/shop.view.client.html",
+                controller: "ShopController",
+                controllerAs: "model"
             })
             .when("/item", {
-                templateUrl: "views/shop/item.view.client.html"
-                //controller: "ShopController",
-                //controllerAs: "model"
-            })
-            .when("/test", {
-                templateUrl: "views/user/test.html"
-                //controller: "ShopController",
-                //controllerAs: "model"
+                templateUrl: "views/shop/item.view.client.html",
+                controller: "ShopController",
+                controllerAs: "model"
             })
             .otherwise({
                 redirectTo: "/welcome"

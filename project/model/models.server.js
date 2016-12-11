@@ -12,9 +12,11 @@ module.exports = function () {
     mongoose.connect(connectionString);
 
     var UserModel = require("./user/user.model.server")();
+    var ShopModel = require("./shop/shop.model.server")();
 
     var model = {
-        UserModel: UserModel
+        UserModel: UserModel,
+        ShopModel: ShopModel
     };
 
     return model;
