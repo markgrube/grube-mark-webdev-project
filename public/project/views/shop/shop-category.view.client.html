@@ -1,0 +1,35 @@
+<div class="container">
+
+    <div class="row">
+
+        <div class="col-md-3">
+            <p class="lead">Category: {{model.items[0].category}}</p>
+            <div class="list-group">
+                <a href="#/shop/GRILL" class="list-group-item">Grills</a>
+                <a href="#/shop/ACCESSORY" class="list-group-item">Accessories</a>
+                <a href="#/shop/SAUCE" class="list-group-item">Sauces</a>
+                <a href="#/shop" class="list-group-item">All</a>
+            </div>
+        </div>
+
+        <div class="col-md-9">
+
+            <div class="row">
+                <div ng-repeat="item in model.items" class="col-sm-4 col-lg-4 col-md-4">
+                    <div class="thumbnail">
+                        <img src="{{model.checkSafeImageUrl(item.image)}}" alt="">
+                        <div class="caption">
+                            <h4 class="pull-right">${{item.price}}</h4>
+                            <h4><a href="#">{{item.name}}</a></h4>
+                            <p>{{item.description}}</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
