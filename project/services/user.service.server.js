@@ -7,9 +7,31 @@ module.exports = function (app, model) {
     var cookieParser  = require('cookie-parser');
     var session = require('express-session');
 
+    app.use(session({secret: 'secret', resave: true, saveUninitialized: true}));
+    app.use(cookieParser());
+    app.use(passport.initialize());
+    app.use(passport.session());
+    passport.use(new LocalStrategy(localStrategy));
+    passport.serializeUser(serializeUser); //store user data in the session
+    passport.deserializeUser(deserializeUser); //fetch object and then attach it to the request object as req.user
+
+    app.get('/auth/google/callback',
+        passport.authenticate('google', {
+            successRedirect: '/project/#/profile',
+            failureRedirect: '/project/#/login'
+        }));
+
+    var googleConfig = {
+        clientID     : process.env.GOOGLE_CLIENT_ID,
+        clientSecret : process.env.GOOGLE_CLIENT_SECRET,
+        callbackURL  : process.env.GOOGLE_CALLBACK_URL
+    };
+
+    passport.use(new GoogleStrategy(googleConfig, googleStrategy));
+
     app.post('/api/user', createUser);
     app.get('/api/user', findCurrentUser);
-    app.get('/api/admin/user', checkAdmin, findAllUsers);
+    app.get('/api/admin/user', adminBypass, findAllUsers);
     app.get('/api/user/:uid', findUserById);
     app.put('/api/user/:uid', loggedInAndSelf, updateUser);
     app.delete('/api/user/:uid', loggedInAndSelf, deleteUser);
@@ -19,36 +41,6 @@ module.exports = function (app, model) {
     app.post('/api/checkLogin', checkLogin);
     app.post('/api/checkAdmin', checkAdmin);
     app.get('/auth/google', passport.authenticate('google', { scope : ['profile', 'email'] }));
-    app.get('/auth/google/callback',
-        passport.authenticate('google', {
-            successRedirect: '/project/#/profile',
-            failureRedirect: '/project/#/login'
-        }));
-
-    app.use(passport.initialize());
-    app.use(passport.session());
-    app.use(cookieParser());
-    app.use(session({secret: 'secret', resave: true, saveUninitialized: true}));
-
-    passport.use(new LocalStrategy(localStrategy));
-    passport.serializeUser(serializeUser); //store user data in the session
-    passport.deserializeUser(deserializeUser); //fetch object and then attach it to the request object as req.user
-
-    if(!process.env.GOOGLE_CLIENT_ID) {
-        var googleConfig = {
-            clientID     : "835551190389-8rk4hm5jdsblsf4sdmoo3gvpa9eupf3h.apps.googleusercontent.com",
-            clientSecret : "VpT8p7M_8Y0pA1iVoV6aTbW4",
-            callbackURL  : "http://127.0.0.1:5000/auth/google/callback"
-        };
-    } else {
-        var googleConfig = {
-            clientID     : process.env.GOOGLE_CLIENT_ID,
-            clientSecret : process.env.GOOGLE_CLIENT_SECRET,
-            callbackURL  : process.env.GOOGLE_CALLBACK_URL
-        };
-    }
-
-    passport.use(new GoogleStrategy(googleConfig, googleStrategy));
 
     function localStrategy(username, password, done) {
         model
@@ -76,6 +68,16 @@ module.exports = function (app, model) {
             next();
         } else {
             res.sendStatus(400).send("You are not the same person");
+        }
+    }
+
+    function adminBypass(req, res, next) {
+        var loggedIn = req.isAuthenticated();
+        var isAdmin = req.user.role == "ADMIN";
+        if(loggedIn && isAdmin) {
+            next();
+        } else {
+            res.sendStatus(400).send("Must be logged in as an administrator to perform this action");
         }
     }
 
@@ -281,8 +283,8 @@ module.exports = function (app, model) {
                 function (response) {
                     res.json(response);
                 },
-                function (err)  {
-                    res.send(err);
+                function (error)  {
+                    res.send(error);
                 }
             );
     }

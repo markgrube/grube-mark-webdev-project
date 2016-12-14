@@ -63,7 +63,6 @@
                     .findCurrentUser()
                     .success(function (user) {
                         if (user != '0') {
-                            console.log(user);
                             vm.user = user;
                         }
                     })
@@ -75,7 +74,7 @@
 
             function updateUser() {
                 UserService
-                    .updateUser(vm.uid, vm.user)
+                    .updateUser(vm.user._id, vm.user)
                     .success(function (user) {
                         $location.url("/user/" + uid)
                     })

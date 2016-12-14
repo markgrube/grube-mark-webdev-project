@@ -10,7 +10,9 @@ module.exports = function(){
         findAllItems: findAllItems,
         findItemById: findItemById,
         findItemsByCategory: findItemsByCategory,
-        addItem: addItem
+        addItem: addItem,
+        updateItem: updateItem,
+        deleteItem: deleteItem
     };
     return api;
 
@@ -19,7 +21,7 @@ module.exports = function(){
     }
 
     function findItemById (itemId) {
-        return ShopModel.find({_id: itemId});
+        return ShopModel.findOne({_id: itemId});
     }
 
     function findItemsByCategory (category) {
@@ -28,5 +30,25 @@ module.exports = function(){
 
     function addItem (item) {
         return ShopModel.create(item);
+    }
+
+    function updateItem (itemId, item) {
+        return ShopModel
+            .update(
+                {
+                    _id: itemId
+                },
+                {
+                    name: item.name,
+                    price: item.price,
+                    description: item.description,
+                    category: item.category,
+                    image: item.image
+                }
+            );
+    }
+
+    function deleteItem (itemId) {
+        return ShopModel.remove({_id: itemId});
     }
 };

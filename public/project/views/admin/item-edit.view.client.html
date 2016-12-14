@@ -1,10 +1,38 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>$Title$</title>
-</head>
-<body>
-$END$
-</body>
-</html>
+<div class="container">
+    <h3>Edit Product</h3>
+    <br>
+    <form>
+        <div class="form-group">
+            <label for="name">Name</label>
+            <input ng-model="model.item.name" type="text" class="form-control" id="name" placeholder="Product Name">
+        </div>
+        <div class="form-group">
+            <label for="price">Price</label>
+            <input ng-model="model.item.price" type="number" class="form-control" id="price" placeholder="10.00">
+        </div>
+
+        <div class="form-group">
+            <label for="category">Category</label>
+            <select ng-model="model.item.category" class="form-control" id="category">
+                <option>GRILL</option>
+                <option>ACCESSORY</option>
+                <option>SAUCE</option>
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label for="url">Image URL</label>
+            <input ng-model="model.item.image" type="url" class="form-control" id="url" placeholder="url">
+        </div>
+
+        <div class="form-group">
+            <label for="description">Description</label>
+            <textarea ng-model="model.item.description" class="form-control" id="description" rows="6" placeholder="Description of Product"></textarea>
+        </div>
+
+        <a class="btn btn-success btn-block" ng-click="model.updateItem()">Update</a>
+        <a class="btn btn-danger btn-block" ng-click="model.deleteItem()">Delete</a>
+        <a class="btn btn-warning btn-block" href="#/admin/products">Cancel</a>
+
+    </form>
+</div>

@@ -1,10 +1,9 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>$Title$</title>
-</head>
-<body>
-$END$
-</body>
-</html>
+<div class="container">
+    <p><a class="lead" href="#/admin">Admin Dashboard</a></p>
+    <a href="#/admin/products/new"><span class="glyphicon glyphicon-plus" href="/admin/products/new"></span> New Product</a>
+
+    <ul class="list-group">
+        <li ng-repeat="item in model.items" class="list-group-item">
+            <a href="#/admin/products/{{item._id}}">{{item.name}}</a>
+    </ul>
+</div>

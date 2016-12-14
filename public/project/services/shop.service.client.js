@@ -8,7 +8,9 @@
             findAllItems: findAllItems,
             findItemById: findItemById,
             findItemsByCategory: findItemsByCategory,
-            addItem: addItem
+            addItem: addItem,
+            updateItem: updateItem,
+            deleteItem: deleteItem
         };
         return api;
 
@@ -18,7 +20,7 @@
         }
 
         function findItemById(itemId) {
-            var url = '/api/items/'+itemId;
+            var url = '/api/item/'+itemId;
             return $http.get(url);
         }
 
@@ -28,13 +30,18 @@
         }
 
         function addItem(item) {
-            var item = {
-                name: item.name,
-                category: item.category,
-                image: item.image
-            };
-            return $http.post("/api/item", item);
+            var url = '/api/item'
+            return $http.post(url, item);
         }
 
+        function updateItem(itemId, item) {
+            var url = '/api/item/'+itemId;
+            return $http.put(url, item);
+        }
+
+        function deleteItem(itemId) {
+            var url = '/api/item/'+itemId;
+            return $http.delete(url);
+        }
     }
 })();

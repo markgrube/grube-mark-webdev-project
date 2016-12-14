@@ -1,1 +1,8 @@
-<h1>Admin</h1>
+<div class="container">
+    <p><a class="lead" href="#/admin">Admin Dashboard</a></p>
+
+    <ul class="list-group">
+        <li ng-repeat="user in model.users" class="list-group-item">
+            <a href="#/admin/user/{{user._id}}">{{user.username}}</a>
+    </ul>
+</div>

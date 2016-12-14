@@ -1,26 +1,49 @@
-<body>
-<!-- Page Content -->
 <div class="container">
 
     <div class="row">
 
         <div class="col-md-3">
-            <p class="lead">Seattle Grill</p>
+            <p class="lead">Category: {{model.item.category}}</p>
             <div class="list-group">
-                <a href="#" class="list-group-item active">Category 1</a>
-                <a href="#" class="list-group-item">Category 2</a>
-                <a href="#" class="list-group-item">Category 3</a>
+                <a href="#/shop/GRILL" class="list-group-item">Grills</a>
+                <a href="#/shop/ACCESSORY" class="list-group-item">Accessories</a>
+                <a href="#/shop/SAUCE" class="list-group-item">Sauces</a>
+                <a href="#/shop" class="list-group-item">All</a>
             </div>
         </div>
 
         <div class="col-md-9">
-
             <div class="thumbnail">
-                <img class="img-responsive" ng-src="{{model.checkSafeImageUrl(widget.url)}}" alt="">
-                <div class="caption-full">
-                    <h4 class="pull-right">{{model.price}}</h4>
-                    <h4>{{model.name}}</h4>
-                    <p>{{model.description}}</p>
+                <img src="{{model.checkSafeImageUrl(model.item.image)}}" width="50%" alt="">
+                <div class="caption">
+                    <div class="row">
+                        <div class="col-lg-9">
+                            <h4>{{model.item.name}}</h4>
+                            <p>{{model.item.description}}</p>
+                        </div>
+                        <div class="col-lg-3">
+                            <div class="row">
+                                <div class="col-lg-6">
+                                    <h4>Price:</h4>
+                                </div>
+                                <div class="col-lg-6">
+                                    <h4>${{model.item.price}}</h4>
+                                </div>
+                            </div>
+
+
+                            <div class="row">
+                                <div class="col-lg-6">
+                                    <h4>Quantity: </h4>
+                                </div>
+                                <div class="col-lg-6">
+                                    <input type="number" ng-model="model.quantity" class="form-control" ng-init="model.quantity=1">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <br>
+                    <a ng-click="model.addToCart({itemId: model.item._id, itemName: model.item.name, itemImage: model.item.image, price: model.item.price, quantity: model.quantity})" class="btn btn-success btn-block">Add To Cart <i class="fa fa-angle-right"></i></a>
                 </div>
             </div>
 
@@ -29,6 +52,3 @@
     </div>
 
 </div>
-<!-- /.container -->
-
-</body>

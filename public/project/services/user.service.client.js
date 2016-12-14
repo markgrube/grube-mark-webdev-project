@@ -5,6 +5,7 @@
 
     function UserService($http) {
         var api = {
+            findAllUsers: findAllUsers,
             findUserByCredentials: findUserByCredentials,
             findUserById: findUserById,
             findCurrentUser: findCurrentUser,
@@ -33,6 +34,11 @@
 
         function findCurrentUser() {
             var url = '/api/user';
+            return $http.get(url);
+        }
+
+        function findAllUsers() {
+            var url = '/api/admin/user';
             return $http.get(url);
         }
 

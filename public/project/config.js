@@ -9,7 +9,39 @@
                 templateUrl: "views/landing/landing.view.client.html"
             })
             .when("/admin", {
+                templateUrl: "views/admin/admin-dashboard.view.client.html",
+                resolve: {
+                    checkAdmin: checkAdmin
+                }
+            })
+            .when("/admin/users", {
                 templateUrl: "views/admin/user-list.view.client.html",
+                controller: "UserListController",
+                controllerAs: "model",
+                resolve: {
+                    checkAdmin: checkAdmin
+                }
+            })
+            .when("/admin/products", {
+                templateUrl: "views/admin/item-list.view.client.html",
+                controller: "ItemListController",
+                controllerAs: "model",
+                resolve: {
+                    checkAdmin: checkAdmin
+                }
+            })
+            .when("/admin/products/new", {
+                templateUrl: "views/admin/item-create.view.client.html",
+                controller: "ItemCreateController",
+                controllerAs: "model",
+                resolve: {
+                    checkAdmin: checkAdmin
+                }
+            })
+            .when("/admin/products/:iid", {
+                templateUrl: "views/admin/item-edit.view.client.html",
+                controller: "ItemEditController",
+                controllerAs: "model",
                 resolve: {
                     checkAdmin: checkAdmin
                 }
@@ -19,28 +51,58 @@
                 controller: "LoginController",
                 controllerAs: "model"
             })
-            .when("/profile", {
-                templateUrl: "views/user/profile.view.client.html",
-                controller: "ProfileController",
-                controllerAs: "model"
-                // resolve: {
-                //     checkLogin: checkLogin
-                // }
-            })
             .when("/register", {
                 templateUrl: "views/user/register.view.client.html",
                 controller: "RegisterController",
                 controllerAs: "model"
             })
+            .when("/profile", {
+                templateUrl: "views/user/profile.view.client.html",
+                controller: "ProfileController",
+                controllerAs: "model",
+                resolve: {
+                    checkLogin: checkLogin
+                }
+            })
             .when("/shop", {
                 templateUrl: "views/shop/shop.view.client.html",
                 controller: "ShopController",
-                controllerAs: "model"
+                controllerAs: "model",
+                resolve: {
+                    checkLogin: checkLogin
+                }
             })
-            .when("/item", {
+            .when("/shop/:cat", {
+                templateUrl: "views/shop/shop-category.view.client.html",
+                controller: "CategoryController",
+                controllerAs: "model",
+                resolve: {
+                    checkLogin: checkLogin
+                }
+            })
+            .when("/shop/item/:iid", {
                 templateUrl: "views/shop/item.view.client.html",
-                controller: "ShopController",
-                controllerAs: "model"
+                controller: "ItemController",
+                controllerAs: "model",
+                resolve: {
+                    checkLogin: checkLogin
+                }
+            })
+            .when("/cart", {
+                templateUrl: "views/order/cart.view.client.html",
+                controller: "CartController",
+                controllerAs: "model",
+                resolve: {
+                    checkLogin: checkLogin
+                }
+            })
+            .when("/order/view", {
+                templateUrl: "views/order/order.view.client.html"
+                // controller: "CartController",
+                // controllerAs: "model",
+                // resolve: {
+                //     checkLogin: checkLogin
+                // }
             })
             .otherwise({
                 redirectTo: "/welcome"

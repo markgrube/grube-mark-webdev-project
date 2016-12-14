@@ -2,8 +2,10 @@ module.exports = function (app, model) {
 
     app.get('/api/items', findAllItems);
     app.get('/api/item/:iid', findItemById);
-    app.get('/api/items/category', findItemsByCategory);
+    app.get('/api/items/:cat', findItemsByCategory);
     app.post('/api/item', addItem);
+    app.put('/api/item/:iid', updateItem);
+    app.delete('/api/item/:iid', deleteItem);
 
 
     function findAllItems(req, res) {
@@ -21,7 +23,7 @@ module.exports = function (app, model) {
     }
 
     function findItemById(req, res) {
-        var itemId = req.query.itemId;
+        var itemId = req.params.iid;
         model
             .ShopModel
             .findItemById(itemId)
@@ -36,10 +38,10 @@ module.exports = function (app, model) {
     }
 
     function findItemsByCategory(req, res) {
-        var category = req.query.category;
+        var category = req.params.cat;
         model
             .ShopModel
-            .findItemById(category)
+            .findItemsByCategory(category)
             .then(
                 function (response) {
                     res.json(response);
@@ -58,6 +60,36 @@ module.exports = function (app, model) {
             .then(
                 function (newItem) {
                     res.send(newItem);
+                },
+                function (error) {
+                    res.sendStatus(400).send(error);
+                }
+            );
+    }
+
+    function updateItem(req, res) {
+        var item = req.body;
+        model
+            .ShopModel
+            .updateItem(item._id, item)
+            .then(
+                function (status) {
+                    res.sendStatus(200);
+                },
+                function (error) {
+                    res.sendStatus(400).send(error);
+                }
+            );
+    }
+
+    function deleteItem(req, res) {
+        var itemId = req.params.iid;
+        model
+            .ShopModel
+            .deleteItem(itemId)
+            .then(
+                function (status) {
+                    res.sendStatus(200);
                 },
                 function (error) {
                     res.sendStatus(400).send(error);

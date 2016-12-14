@@ -12,6 +12,7 @@ module.exports = function(){
         findUserById: findUserById,
         findUserByUsername: findUserByUsername,
         findUserByCredentials: findUserByCredentials,
+        findAllUsers: findAllUsers,
         updateUser: updateUser,
         deleteUser: deleteUser
     };
@@ -56,6 +57,10 @@ module.exports = function(){
             username: username,
             password: password
         });
+    }
+
+    function findAllUsers() {
+        return UserModel.find();
     }
 
     function deleteUser(id) {

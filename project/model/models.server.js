@@ -13,10 +13,12 @@ module.exports = function () {
 
     var UserModel = require("./user/user.model.server")();
     var ShopModel = require("./shop/shop.model.server")();
+    var OrderModel = require("./order/order.model.server")();
 
     var model = {
         UserModel: UserModel,
-        ShopModel: ShopModel
+        ShopModel: ShopModel,
+        OrderModel: OrderModel
     };
 
     return model;
