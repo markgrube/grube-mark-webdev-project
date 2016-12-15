@@ -14,7 +14,9 @@ module.exports = function(){
         findUserByCredentials: findUserByCredentials,
         findAllUsers: findAllUsers,
         updateUser: updateUser,
-        deleteUser: deleteUser
+        deleteUser: deleteUser,
+        demoteUser: demoteUser,
+        promoteUser: promoteUser
     };
     return api;
 
@@ -65,5 +67,29 @@ module.exports = function(){
 
     function deleteUser(id) {
         return UserModel.remove({_id: id});
+    }
+
+    function demoteUser(id) {
+        return UserModel
+            .update(
+                {
+                    _id: id
+                },
+                {
+                    role: 'CLIENT'
+                }
+            );
+    }
+
+    function promoteUser(id) {
+        return UserModel
+            .update(
+                {
+                    _id: id
+                },
+                {
+                    role: 'ADMIN'
+                }
+            );
     }
 };

@@ -1,10 +1,149 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
+<div class="container">
+    <div class="row">
+        <hr/>
+        <h1>Checkout</h1>
+        <hr/>
+        <p>We hope you have enjoyed your experience so far. This is a demo website. As a result, we have a wonderful
+            offer just for you.</p>
+        <p>Everything you purchase today is FREE!</p>
+        <p>You won't actually receive anything, but its the thought that counts, right?</p>
+        <strong>Purchase Summary:</strong>
+        <h2 class="bg-success">Today's Total: FREE</h2>
 
-</body>
-</html>
+
+        <div class="form-group col-md-12 bg-primary">
+            <div class="control-group">
+
+                <div class="controls">
+                    <label class="control-label">Billing Information</label>
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group col-md-6">
+            <div class="control-group">
+                <label class="control-label" for="firstName">First Name</label>
+                <div class="controls">
+                    <input id="firstName" name="firstName" type="text" placeholder="" class="form-control" required=""
+                           disabled="disabled">
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group col-md-6">
+            <div class="control-group">
+                <label class="control-label" for="lastName">Last Name</label>
+                <div class="controls">
+                    <input id="lastName" name="lastName" type="text" placeholder="" class="form-control" required=""
+                           disabled="disabled">
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group col-md-6">
+            <div class="control-group">
+                <label class="control-label" for="cardnumber">Card Number</label>
+                <div class="controls">
+                    <input id="cardnumber" name="cardnumber" type="text" placeholder="" class="form-control"
+                           disabled="disabled">
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group col-md-6 card-expiry">
+            <div class="control-group col-md-4">
+                <label class="control-label" for="cvv">CVV</label>
+                <div class="controls">
+                    <input id="cvv" name="cvv" type="text" placeholder="" class="form-control" disabled="disabled">
+                </div>
+            </div>
+            <div class="control-group col-md-4">
+                <div class="control-group">
+                    <label class="control-label" for="month">Expiration Date</label>
+                    <div class="controls">
+                        <select id="month" name="month" class="input-xlarge" disabled="disabled">
+                            <option>Select Month .</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-4">
+                <div class="control-group">
+                    <label class="control-label" for="selectyear"></label>
+                    <div class="controls">
+                        <select id="selectyear" name="selectyear" class="input-xlarge" disabled="disabled">
+                            <option>Select Year .</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="form-group col-md-6">
+            <i class="fa fa-cc-visa" aria-hidden="true"></i>
+            <i class="fa fa-cc-mastercard" aria-hidden="true"></i>
+            <i class="fa fa-cc-amex" aria-hidden="true"></i>
+            <i class="fa fa-cc-discover" aria-hidden="true"></i>
+        </div>
+
+
+        <div class="form-group col-md-12 bg-primary">
+            <label class="control-label">Delivery Information</label>
+        </div>
+
+        <div class="shipping-info">
+
+            <div class="form-group col-md-6">
+                <span class="required-lbl">* </span><label class="control-label" for="address">Address</label>
+                <div class="controls">
+                    <input ng-model="model.address" id="address" placeholder="" class="form-control" required>
+                </div>
+            </div>
+
+            <div class="form-group col-md-6">
+                <span class="required-lbl">* </span><label class="control-label" for="city">City</label>
+                <div class="controls">
+                    <input ng-model="model.city" id="city" type="text" placeholder="" class="form-control" required>
+                </div>
+            </div>
+
+
+            <div class="form-group col-md-6">
+                <span class="required-lbl">* </span><label class="control-label" for="state">State</label>
+                <div class="controls">
+                    <input ng-model="model.state" id="state" type="text" placeholder="" class="form-control" required>
+                </div>
+            </div>
+
+            <div class="form-group col-md-6">
+                <span class="required-lbl">* </span><label class="control-label" for="date">Date</label>
+                <div class="controls">
+                    <input ng-model="model.date" id="date" type="date" class="form-control" required>
+                </div>
+            </div>
+
+            <hr/>
+            <div class="form-group col-md-12">
+            <div>
+                <button class="btn btn-primary" ng-click="model.checkAddress(model.address + ', ' + model.city + ' ' + model.state)">Check Address</button>
+            </div>
+            <div id="map"></div>
+            </div>
+
+            <hr/>
+
+            <div class="form-group col-md-12">
+                <div class="confirm-btn">
+                    <label class="label" for="placeorderbtn"></label>
+                    <div class="controls">
+                        <button ng-click="model.placeOrder({address: model.address, city: model.city, state: model.state, date: model.date})"
+                                id="placeorderbtn" class="btn btn-primary">Place My Order</button>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>

@@ -96,13 +96,21 @@
                     checkLogin: checkLogin
                 }
             })
-            .when("/order/view", {
-                templateUrl: "views/order/order.view.client.html"
-                // controller: "CartController",
-                // controllerAs: "model",
-                // resolve: {
-                //     checkLogin: checkLogin
-                // }
+            .when("/checkout", {
+                templateUrl: "views/order/checkout.view.client.html",
+                controller: "CheckoutController",
+                controllerAs: "model",
+                resolve: {
+                    checkLogin: checkLogin
+                }
+            })
+            .when("/orders", {
+                templateUrl: "views/order/orders.view.client.html",
+                controller: "OrdersController",
+                controllerAs: "model",
+                resolve: {
+                    checkLogin: checkLogin
+                }
             })
             .otherwise({
                 redirectTo: "/welcome"

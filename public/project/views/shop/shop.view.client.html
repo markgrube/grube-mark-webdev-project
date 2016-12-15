@@ -17,7 +17,7 @@
                 <div class="row">
                     <div ng-repeat="item in model.items" class="col-sm-4 col-lg-4 col-md-4">
                         <div class="thumbnail">
-                            <img src={{item.image}} alt="">
+                            <img ng-src={{item.image}} alt="">
                             <div class="caption">
                                 <h4 class="pull-right">${{item.price}}</h4>
                                 <h4><a href="#/shop/item/{{item._id}}">{{item.name}}</a></h4>

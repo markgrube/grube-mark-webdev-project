@@ -6,14 +6,16 @@
             .controller("ItemCreateController", ItemCreateController)
             .controller("ItemEditController", ItemEditController);
 
-        function UserListController(UserService) {
+        function UserListController(UserService, $location) {
             var vm = this;
+            vm.adminDeleteUser = adminDeleteUser;
+            vm.demoteUser = demoteUser;
+            vm.promoteUser = promoteUser;
 
             function init() {
                 UserService
                     .findAllUsers()
                     .success(function (users) {
-                        console.log(users)
                         vm.users = users;
                     })
                     .error(function (){
@@ -21,8 +23,43 @@
                     });
             }
             init();
-        }
 
+            function adminDeleteUser(userId) {
+                UserService
+                    .adminDeleteUser(userId)
+                    .success(function(){
+                        $location.url("/admin/users/");
+                    })
+                    .error(function(){
+                        vm.error = "Failed to delete user.";
+                        console.log("Failed to delete user.")
+                    });
+            }
+
+            function demoteUser(userId) {
+                UserService
+                    .demoteUser(userId)
+                    .success(function () {
+                        $location.url("/admin/users/")
+                    })
+                    .error (function (){
+                        vm.error = "Failed to demote user. Are you trying to demote yourself?";
+                        console.log("Failed to demote user.")
+                    });
+            }
+
+            function promoteUser(userId) {
+                UserService
+                    .promoteUser(userId)
+                    .success(function () {
+                        $location.url("/admin/users/")
+                    })
+                    .error (function (){
+                        vm.error = "Failed to promote user.";
+                        console.log("Failed to promote user.")
+                    });
+            }
+        }
 
         function ItemListController(ShopService) {
             var vm = this;

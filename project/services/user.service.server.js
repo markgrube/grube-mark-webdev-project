@@ -32,6 +32,9 @@ module.exports = function (app, model) {
     app.post('/api/user', createUser);
     app.get('/api/user', findCurrentUser);
     app.get('/api/admin/user', adminBypass, findAllUsers);
+    app.delete('/api/admin/user/:uid', adminBypass, deleteUser);
+    app.put('/api/user/demote/:uid', adminBypassAndCheckAdmin, demoteUser);
+    app.put('/api/user/promote/:uid', adminBypass, promoteUser);
     app.get('/api/user/:uid', findUserById);
     app.put('/api/user/:uid', loggedInAndSelf, updateUser);
     app.delete('/api/user/:uid', loggedInAndSelf, deleteUser);
@@ -81,13 +84,31 @@ module.exports = function (app, model) {
         }
     }
 
-    function checkAdmin(req, res) {
+    function adminBypassAndCheckAdmin(req, res, next){
         var loggedIn = req.isAuthenticated();
         var isAdmin = req.user.role == "ADMIN";
-        if(loggedIn && isAdmin) {
-            res.json(req.user);
+        var userId = req.params.uid;
+        var self = userId == req.user._id;
+        if(self && loggedIn && isAdmin) {
+            res.sendStatus(400);
+        } else if (loggedIn && isAdmin) {
+            next();
         } else {
+            res.sendStatus(400).send("Must be logged in as an administrator to perform this action");
+        }
+    }
+
+    function checkAdmin(req, res) {
+        var loggedIn = req.isAuthenticated();
+        if(!loggedIn){
             res.send('0');
+        } else{
+            var isAdmin = req.user.role == "ADMIN";
+            if(loggedIn && isAdmin) {
+                res.json(req.user);
+            } else {
+                res.send('0');
+            }
         }
     }
 
@@ -319,4 +340,35 @@ module.exports = function (app, model) {
                 }
             )
     }
+
+    function demoteUser(req, res) {
+        var userId = req.params.uid;
+        model
+            .UserModel
+            .demoteUser(userId)
+            .then(
+                function (status) {
+                    res.sendStatus(200);
+                },
+                function (error) {
+                    res.sendStatus(400).send(error);
+                }
+            )
+    }
+
+    function promoteUser(req, res) {
+        var userId = req.params.uid;
+        model
+            .UserModel
+            .promoteUser(userId)
+            .then(
+                function (status) {
+                    res.sendStatus(200);
+                },
+                function (error) {
+                    res.sendStatus(400).send(error);
+                }
+            )
+    }
+
 };

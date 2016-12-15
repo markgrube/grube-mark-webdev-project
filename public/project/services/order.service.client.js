@@ -6,7 +6,10 @@
     function OrderService($http) {
         var api = {
             addItemToCart: addItemToCart,
-            findCartForUser: findCartForUser
+            findCartForUser: findCartForUser,
+            deleteFromCart: deleteFromCart,
+            placeOrder: placeOrder,
+            findOrdersForUser: findOrdersForUser
         };
         return api;
 
@@ -17,8 +20,22 @@
 
         function findCartForUser(userId) {
             var url = '/api/cart/' + userId;
-            return $http.get(url)
+            return $http.get(url);
         }
 
+        function deleteFromCart(orderId) {
+            var url = '/api/cart/'+orderId;
+            return $http.delete(url);
+        }
+
+        function placeOrder(userId, deliveryInfo) {
+            var url = '/api/cart/'+userId;
+            return $http.put(url, deliveryInfo);
+        }
+
+        function findOrdersForUser(userId){
+            var url = '/api/orders/' + userId;
+            return $http.get(url);
+        }
     }
 })();

@@ -21,6 +21,7 @@
                         }
                     })
                     .error(function(){
+                        vm.error = "Invalid Credentials. Please check your credentials and try again.";
                         console.log("No user found.")
                     });
             }
@@ -37,8 +38,8 @@
                 } else if (vm.password === vm.verifyPassword){
                     UserService
                         .register(user)
-                        .success(function(user){
-                            $location.url("/user/"+user._id);
+                        .success(function(){
+                            $location.url("/profile");
                         })
                         .error(function(){
                             vm.error = "Username already taken";
@@ -53,7 +54,6 @@
 
         function ProfileController(UserService, $location) {
             var vm = this;
-            // vm.uid = userId;
             vm.updateUser = updateUser;
             vm.deleteUser = deleteUser;
             vm.logout = logout;
@@ -75,8 +75,8 @@
             function updateUser() {
                 UserService
                     .updateUser(vm.user._id, vm.user)
-                    .success(function (user) {
-                        $location.url("/user/" + uid)
+                    .success(function () {
+                        $location.url("/profile")
                     })
                     .error (function (){
                         console.log("Failed to update user.")

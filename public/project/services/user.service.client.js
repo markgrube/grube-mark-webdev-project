@@ -14,6 +14,9 @@
             login: login,
             logout: logout,
             register: register,
+            adminDeleteUser: adminDeleteUser,
+            demoteUser: demoteUser,
+            promoteUser: promoteUser,
             checkLogin: checkLogin,
             checkAdmin: checkAdmin
         };
@@ -75,6 +78,21 @@
                 password: user.password
             };
             return $http.post("/api/register", user);
+        }
+
+        function adminDeleteUser(userId) {
+            var url = "/api/admin/user/" + userId;
+            return $http.delete(url);
+        }
+
+        function demoteUser(userId) {
+            var url = "/api/user/demote/" + userId;
+            return $http.put(url);
+        }
+
+        function promoteUser(userId) {
+            var url = "/api/user/promote/" + userId;
+            return $http.put(url);
         }
     }
 })();

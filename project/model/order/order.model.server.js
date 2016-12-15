@@ -1,5 +1,5 @@
 "use strict"
-module.exports = function(){
+module.exports = function () {
 
     var model = {};
     var mongoose = require("mongoose");
@@ -8,43 +8,44 @@ module.exports = function(){
 
     var api = {
         findCartForUser: findCartForUser,
-        findOrderedItemsForUser: findOrderedItemsForUser,
+        findOrdersForUser: findOrdersForUser,
         findOrderItemById: findOrderItemById,
         addItemToCart: addItemToCart,
-        checkoutCart: checkoutCart,
-        deleteFromCart: deleteFromCart
+        deleteFromCart: deleteFromCart,
+        placeOrder: placeOrder
     };
     return api;
 
-    function findCartForUser (userId) {
+    function findCartForUser(userId) {
         return OrderModel.find({userId: userId, ordered: false});
     }
 
-    function findOrderedItemsForUser (userId) {
+    function findOrdersForUser(userId) {
         return OrderModel.find({userId: userId, ordered: true});
     }
 
-    function findOrderItemById (orderId) {
+    function findOrderItemById(orderId) {
         return OrderModel.findOne({_id: orderId});
     }
 
-    function addItemToCart (orderItem) {
+    function addItemToCart(orderItem) {
         return OrderModel.create(orderItem);
     }
 
-    function checkoutCart (userId) {
-        return OrderModel
-            .update(
-                {
-                    userId: userId
-                },
-                {
-                    ordered: true
-                }
-            );
+    function deleteFromCart(orderId) {
+        return OrderModel.remove({_id: orderId});
     }
 
-    function deleteFromCart (orderId) {
-        return OrderModel.remove({_id: orderId});
+    function placeOrder(userId, orderInfo) {
+        var query = OrderModel.find({userId: userId, ordered: false});
+        return OrderModel.update(query,
+            {
+                ordered: true,
+                address: orderInfo.address,
+                city: orderInfo.city,
+                state: orderInfo.state,
+                deliveryDate: orderInfo.date
+            },
+            {multi: true});
     }
 };
